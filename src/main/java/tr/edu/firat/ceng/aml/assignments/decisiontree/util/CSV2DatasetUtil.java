@@ -56,10 +56,10 @@ public final class CSV2DatasetUtil {
                     Property get = properties.get(i);
                     if (get instanceof NumericProperty) {
                         NumericProperty numericProperty = (NumericProperty) get;
-                        numericProperty.addValue(new Double(record.get(i)));
+                        numericProperty.getValues().add(new Double(record.get(i)));
                     }
                 }
-                classProperty.addValue(record.get(properties.size()));
+                classProperty.getValues().add(record.get(properties.size()));
             }
             Dataset dataset = new DatasetImpl(classProperty);
             dataset.addProperties(properties);

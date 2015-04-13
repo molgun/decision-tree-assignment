@@ -15,21 +15,48 @@
  */
 package tr.edu.firat.ceng.aml.assignments.decisiontree.data;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Muhammed Olgun <141129113@ogrenci.firat.edu.tr>
+ * @param <V>
  */
-public abstract class AbstractProperty implements Property {
+public abstract class AbstractProperty<V> implements Property<V> {
 
     private final String name;
+    private final List<V> values;
 
     public AbstractProperty(String name) {
         this.name = name;
+        this.values = new ArrayList<V>();
+    }
+
+    public AbstractProperty(Property<V> property) {
+        this.name = property.getName();
+        this.values = property.getCopiedValues();
     }
 
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public List<V> getCopiedValues() {
+        List<V> newValues = new ArrayList<V>();
+        newValues.addAll(values);
+        return newValues;
+    }
+
+    @Override
+    public List<V> getValues() {
+        return this.values;
+    }
+
+    @Override
+    public Integer size() {
+        return values.size();
     }
 }

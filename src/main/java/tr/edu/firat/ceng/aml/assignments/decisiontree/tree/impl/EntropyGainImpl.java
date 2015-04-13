@@ -20,6 +20,7 @@ import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Dataset;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.NominalProperty;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Property;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.exception.UnproperPropertyException;
+import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.DecisionTree;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.Gain;
 
 /**
@@ -80,5 +81,10 @@ public class EntropyGainImpl implements Gain {
     @Override
     public void setDataset(Dataset dataset) {
         this.dataset = dataset;
+    }
+
+    @Override
+    public DecisionTree getPart(Property property) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

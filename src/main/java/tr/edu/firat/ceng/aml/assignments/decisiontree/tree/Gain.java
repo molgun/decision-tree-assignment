@@ -26,5 +26,7 @@ public interface Gain {
 
     public double getGain(Property property);
 
+    public DecisionTree getPart(Property property);
+
     public void setDataset(Dataset dataset);
 }

@@ -15,8 +15,6 @@
  */
 package tr.edu.firat.ceng.aml.assignments.decisiontree.data.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.AbstractProperty;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.NumericProperty;
 
@@ -24,29 +22,13 @@ import tr.edu.firat.ceng.aml.assignments.decisiontree.data.NumericProperty;
  *
  * @author Muhammed Olgun <141129113@ogrenci.firat.edu.tr>
  */
-public class NumericPropertyImpl extends AbstractProperty implements NumericProperty {
-
-    private final List<Number> values;
+public class NumericPropertyImpl extends AbstractProperty<Number> implements NumericProperty {
 
     public NumericPropertyImpl(String name) {
         super(name);
-        this.values = new ArrayList<Number>();
     }
 
-    @Override
-    public Integer size() {
-        return values.size();
-    }
-
-    @Override
-    public List<Number> getValues() {
-        List<Number> array2Return = new ArrayList<Number>(values.size());
-        array2Return.addAll(values);
-        return array2Return;
-    }
-
-    @Override
-    public void addValue(Number value) {
-        values.add(value);
+    public NumericPropertyImpl(AbstractProperty<Number> property) {
+        super(property);
     }
 }

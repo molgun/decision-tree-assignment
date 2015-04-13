@@ -21,13 +21,9 @@ import java.util.List;
  *
  * @author Muhammed Olgun <141129113@ogrenci.firat.edu.tr>
  */
-public interface NominalProperty extends Property {
-
-    public List<String> getValues();
+public interface NominalProperty extends Property<String> {
 
     public List<String> getUniqueValues();
 
     public Integer getUniqueValueRawFrequency(String uniqueValue);
-    
-    public void addValue(String value);
 }

@@ -24,6 +24,7 @@ import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Property;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.impl.ClassPropertyImpl;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.impl.DatasetImpl;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.impl.NumericPropertyImpl;
+import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.impl.DecisionTreeBuilder;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.impl.GiniGainImpl;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.util.CSV2DatasetUtil;
 
@@ -45,19 +46,8 @@ public class Main {
         CSV2DatasetUtil util = new CSV2DatasetUtil();
         try {
             Dataset dataset = util.convert("iris.data");
-            GiniGainImpl instance = new GiniGainImpl(dataset);
-            Property mostValuable = null;
-            double gainValue = 0;
-            for (Property property : dataset.getProperties()) {
-                double newGainValue = instance.getGain(property);
-                if(mostValuable == null) {
-                    mostValuable = property;
-                    gainValue = newGainValue;
-                } else if (gainValue < newGainValue) {
-                    mostValuable = property;
-                    gainValue = newGainValue;
-                }
-            }
+            DecisionTreeBuilder builder = new DecisionTreeBuilder(new GiniGainImpl());
+            builder.build(dataset);
         } catch (IOException ex) {
             System.out.println(ex);
         }

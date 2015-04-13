@@ -15,21 +15,71 @@
  */
 package tr.edu.firat.ceng.aml.assignments.decisiontree.tree.impl;
 
-import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Dataset;
-import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.Gain;
+import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.DecisionTree;
 
 /**
  *
  * @author Muhammed Olgun <141129113@ogrenci.firat.edu.tr>
  */
-public class DecisionTreeImpl {
+public class DecisionTreeImpl implements DecisionTree {
 
-    private final Dataset dataset;
-    private final Gain gain;
+    private String propertyName;
+    private Object conditionValue;
+    private String result;
+    private DecisionTree left;
+    private DecisionTree right;
 
-    public DecisionTreeImpl(Dataset dataset, Gain gain) {
-        this.dataset = dataset;
-        this.gain = gain;
-        gain.setDataset(dataset);
+    public DecisionTreeImpl() {
+    }
+
+    public DecisionTreeImpl(String result) {
+        this.result = result;
+    }
+
+    @Override
+    public DecisionTree next(Object value) {
+        if (value instanceof Number) {
+            if (((Number) value).doubleValue() > ((Number) conditionValue).doubleValue()) {
+                return right;
+            }
+            return left;
+        }
+        throw new RuntimeException();
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    @Override
+    public void setLeft(DecisionTree left) {
+        this.left = left;
+    }
+
+    @Override
+    public void setRight(DecisionTree right) {
+        this.right = right;
+    }
+
+    public void setConditionValue(Object conditionValue) {
+        this.conditionValue = conditionValue;
+    }
+
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
+    }
+
+    @Override
+    public String getPropertyName() {
+        return propertyName;
+    }
+
+    @Override
+    public Object getConditionValue() {
+        return this.conditionValue;
     }
 }

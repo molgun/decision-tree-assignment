@@ -15,13 +15,20 @@
  */
 package tr.edu.firat.ceng.aml.assignments.decisiontree.data;
 
+import java.util.List;
+
 /**
  *
  * @author Muhammed Olgun <141129113@ogrenci.firat.edu.tr>
+ * @param <V>
  */
-public interface Property {
+public interface Property<V> {
 
     public String getName();
 
     public Integer size();
+
+    public List<V> getValues();
+
+    public List<V> getCopiedValues();
 }

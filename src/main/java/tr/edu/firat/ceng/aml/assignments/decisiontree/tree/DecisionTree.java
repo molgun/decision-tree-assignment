@@ -21,5 +21,13 @@ package tr.edu.firat.ceng.aml.assignments.decisiontree.tree;
  */
 public interface DecisionTree {
 
-    public void addRule(Rule parentRule);
+    public DecisionTree next(Object value);
+
+    public String getPropertyName();
+
+    public void setLeft(DecisionTree decisionTree);
+
+    public void setRight(DecisionTree decisionTree);
+    
+    public Object getConditionValue();
 }

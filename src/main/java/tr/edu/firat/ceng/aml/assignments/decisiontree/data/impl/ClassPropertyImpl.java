@@ -26,4 +26,8 @@ public class ClassPropertyImpl extends NominalPropertyImpl implements ClassPrope
     public ClassPropertyImpl(String name) {
         super(name);
     }
+
+    public ClassPropertyImpl(ClassProperty classProperty) {
+        super(classProperty);
+    }
 }

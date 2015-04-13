@@ -22,8 +22,8 @@ import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Dataset;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.NumericProperty;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Property;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.exception.UnproperPropertyException;
+import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.DecisionTree;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.Gain;
-import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.Rule;
 
 /**
  *
@@ -32,14 +32,55 @@ import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.Rule;
 public class GiniGainImpl implements Gain {
 
     private Dataset dataset;
-    private Split lastSplit;
-    private Property lastProperty;
+    private Split split;
 
     public GiniGainImpl() {
     }
 
     public GiniGainImpl(Dataset dataset) {
         this.dataset = dataset;
+    }
+
+    @Override
+    public DecisionTree getPart(Property property) {
+        double gain = getGain(property);
+        DecisionTreeImpl decisionTreeImpl = new DecisionTreeImpl();
+        decisionTreeImpl.setPropertyName(property.getName());
+        for (UniqueValueHolder holder : split.getValues()) {
+            if (holder.getNumberOfGreater() == split.getTotalNumberOfGreater() || holder.getNumberOfLessOrEqual() == split.getTotalNumberOfLessOrEqual()) {
+                decisionTreeImpl.setRight(new DecisionTreeImpl(holder.getClassName()));
+            }
+
+            if (holder.getNumberOfLessOrEqual() == split.getTotalNumberOfLessOrEqual()) {
+                decisionTreeImpl.setLeft(new DecisionTreeImpl(holder.getClassName()));
+            }
+
+        }
+
+        if (dataset.getProperties().size() == 1) {
+            List<UniqueValueHolder> holders = split.getValues();
+            String rightClass = "";
+            String leftClass = "";
+            int rightCount = 0;
+            int leftCount = 0;
+            for (UniqueValueHolder holder : holders) {
+                if (holder.getNumberOfGreater() > rightCount) {
+                    rightCount = holder.getNumberOfGreater();
+                    rightClass = holder.getClassName();
+                }
+
+                if (holder.getNumberOfLessOrEqual() > leftCount) {
+                    leftClass = holder.getClassName();
+                    leftCount = holder.getNumberOfLessOrEqual();
+                }
+            }
+            decisionTreeImpl.setLeft(new DecisionTreeImpl(leftClass));
+            decisionTreeImpl.setRight(new DecisionTreeImpl(rightClass));
+            return decisionTreeImpl;
+        }
+
+        decisionTreeImpl.setConditionValue(split.getSplitValue());
+        return decisionTreeImpl;
     }
 
     @Override
@@ -113,6 +154,7 @@ public class GiniGainImpl implements Gain {
                 gini += inside * totalFrequency;
                 if (classPropertyGini - gini > gain) {
                     gain = classPropertyGini - gini;
+                    this.split = split;
                 }
             }
             return gain;

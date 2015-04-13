@@ -21,9 +21,6 @@ import java.util.List;
  *
  * @author Muhammed Olgun <141129113@ogrenci.firat.edu.tr>
  */
-public interface NumericProperty extends Property {
+public interface NumericProperty extends Property<Number> {
 
-    public List<Number> getValues();
-
-    public void addValue(Number value);
 }

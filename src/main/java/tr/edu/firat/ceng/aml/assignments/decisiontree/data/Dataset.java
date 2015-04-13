@@ -27,6 +27,10 @@ public interface Dataset {
 
     public List<Property> getProperties();
 
+    public List<Property> getCopiedProperties();
+
+    public Dataset createCopyOfDataset(Property property, Object value, boolean isGreater);
+
     public void addProperty(Property property);
 
     public void removeProperty(Property property);

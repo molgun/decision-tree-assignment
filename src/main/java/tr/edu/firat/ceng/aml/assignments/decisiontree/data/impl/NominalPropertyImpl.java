@@ -19,36 +19,27 @@ import java.util.ArrayList;
 import java.util.List;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.AbstractProperty;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.NominalProperty;
+import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Property;
 
 /**
  *
  * @author Muhammed Olgun <141129113@ogrenci.firat.edu.tr>
  */
-public class NominalPropertyImpl extends AbstractProperty implements NominalProperty {
+public class NominalPropertyImpl extends AbstractProperty<String> implements NominalProperty {
 
-    private final List<String> values;
 
     public NominalPropertyImpl(String name) {
         super(name);
-        this.values = new ArrayList<String>();
     }
 
-    @Override
-    public Integer size() {
-        return values.size();
+    public NominalPropertyImpl(Property<String> property) {
+        super(property);
     }
-
-    @Override
-    public List<String> getValues() {
-        List<String> array2Return = new ArrayList<String>(values.size());
-        array2Return.addAll(values);
-        return array2Return;
-    }
-
+    
     @Override
     public List<String> getUniqueValues() {
         List<String> uniques = new ArrayList<String>();
-        for (String value : values) {
+        for (String value : getValues()) {
             if (!uniques.contains(value)) {
                 uniques.add(value);
             }
@@ -59,16 +50,11 @@ public class NominalPropertyImpl extends AbstractProperty implements NominalProp
     @Override
     public Integer getUniqueValueRawFrequency(String uniqueValue) {
         Integer rawFrequency = 0;
-        for (String value : values) {
+        for (String value : getValues()) {
             if (uniqueValue.equals(value)) {
                 rawFrequency++;
             }
         }
         return rawFrequency;
-    }
-
-    @Override
-    public void addValue(String value) {
-        values.add(value);
     }
 }

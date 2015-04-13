@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.ClassProperty;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Dataset;
+import tr.edu.firat.ceng.aml.assignments.decisiontree.data.NumericProperty;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Property;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.exception.UnproperPropertyException;
 
@@ -37,6 +38,28 @@ public class DatasetImpl implements Dataset {
         this.properties = new ArrayList<Property>();
     }
 
+    public DatasetImpl(Dataset dataset) {
+        classProperty = new ClassPropertyImpl(dataset.getClassProperty());
+        properties = dataset.getCopiedProperties();
+    }
+
+    @Override
+    public Dataset createCopyOfDataset(Property property, Object value, boolean isGreater) {
+        DatasetImpl datasetImpl = new DatasetImpl(this);
+        for (int i = 0; i < property.getValues().size(); i++) {
+            Object val = property.getValues().get(i);
+            if (property instanceof NumericProperty) {
+                if ((((Number) val).doubleValue() > ((Number) value).doubleValue()) ^ isGreater) {
+                    for (Property property1 : properties) {
+                        property1.getValues().remove(i);
+                    }
+                    datasetImpl.getClassProperty().getValues().remove(i);
+                }
+            }
+        }
+        return datasetImpl;
+    }
+
     @Override
     public ClassProperty getClassProperty() {
         return classProperty;
@@ -45,6 +68,13 @@ public class DatasetImpl implements Dataset {
     @Override
     public List<Property> getProperties() {
         return properties;
+    }
+
+    @Override
+    public List<Property> getCopiedProperties() {
+        List<Property> properties2Return = new ArrayList<Property>();
+        properties2Return.addAll(properties);
+        return properties2Return;
     }
 
     @Override
