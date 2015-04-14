@@ -18,8 +18,10 @@ package tr.edu.firat.ceng.aml.assignments.decisiontree.data.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import tr.edu.firat.ceng.aml.assignments.decisiontree.data.AbstractProperty;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.ClassProperty;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Dataset;
+import tr.edu.firat.ceng.aml.assignments.decisiontree.data.NominalProperty;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.NumericProperty;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Property;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.exception.UnproperPropertyException;
@@ -44,19 +46,40 @@ public class DatasetImpl implements Dataset {
     }
 
     @Override
+    public void printDataset() {
+        for (Property property : properties) {
+            int countTop = property.getName().length();
+            for (int i = 0; i < countTop; i++) {
+                System.out.print("-");
+            }
+        }
+        System.out.println("");
+        for (Property property : properties) {
+            System.out.print(property.getName() + "\t");
+        }
+        System.out.println(classProperty.getName());
+        for (int i = 0; i < classProperty.getValues().size(); i++) {
+            for (Property property : properties) {
+                Object get = property.getValues().get(i);
+                System.out.print(get + "\t");
+            }
+            System.out.println(classProperty.getValues().get(i));
+        }
+    }
+
+    @Override
     public Dataset createCopyOfDataset(Property property, Object value, boolean isGreater) {
         DatasetImpl datasetImpl = new DatasetImpl(this);
+        property = datasetImpl.getPropertyByName(property.getName());
         for (int i = 0; i < property.getValues().size(); i++) {
             Object val = property.getValues().get(i);
             if (property instanceof NumericProperty) {
                 if ((((Number) val).doubleValue() > ((Number) value).doubleValue()) ^ isGreater) {
-                    for (Property property1 : properties) {
-                        property1.getValues().remove(i);
-                    }
-                    datasetImpl.getClassProperty().getValues().remove(i);
+                    datasetImpl.removeRaw(i);
                 }
             }
         }
+        datasetImpl.removeProperty(property);
         return datasetImpl;
     }
 
@@ -73,7 +96,13 @@ public class DatasetImpl implements Dataset {
     @Override
     public List<Property> getCopiedProperties() {
         List<Property> properties2Return = new ArrayList<Property>();
-        properties2Return.addAll(properties);
+        for (Property property : properties) {
+            if (property instanceof NumericProperty) {
+                properties2Return.add(new NumericPropertyImpl((AbstractProperty<Number>) property));
+            } else if (property instanceof NominalProperty) {
+                properties2Return.add(new NominalPropertyImpl((AbstractProperty<String>) property));
+            }
+        }
         return properties2Return;
     }
 
@@ -112,5 +141,12 @@ public class DatasetImpl implements Dataset {
         for (Property prop : properties) {
             addProperty(prop);
         }
+    }
+
+    public void removeRaw(int index) {
+        for (Property property : properties) {
+            property.getValues().remove(index);
+        }
+        classProperty.getValues().remove(index);
     }
 }

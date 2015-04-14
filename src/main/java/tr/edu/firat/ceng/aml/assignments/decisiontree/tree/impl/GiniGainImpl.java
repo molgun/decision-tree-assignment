@@ -47,7 +47,7 @@ public class GiniGainImpl implements Gain {
         DecisionTreeImpl decisionTreeImpl = new DecisionTreeImpl();
         decisionTreeImpl.setPropertyName(property.getName());
         for (UniqueValueHolder holder : split.getValues()) {
-            if (holder.getNumberOfGreater() == split.getTotalNumberOfGreater() || holder.getNumberOfLessOrEqual() == split.getTotalNumberOfLessOrEqual()) {
+            if (holder.getNumberOfGreater() == split.getTotalNumberOfGreater()) {
                 decisionTreeImpl.setRight(new DecisionTreeImpl(holder.getClassName()));
             }
 
@@ -76,6 +76,7 @@ public class GiniGainImpl implements Gain {
             }
             decisionTreeImpl.setLeft(new DecisionTreeImpl(leftClass));
             decisionTreeImpl.setRight(new DecisionTreeImpl(rightClass));
+            decisionTreeImpl.setConditionValue(split.getSplitValue());
             return decisionTreeImpl;
         }
 

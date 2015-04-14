@@ -16,14 +16,9 @@
 package tr.edu.firat.ceng.aml.assignments.decisiontree;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import tr.edu.firat.ceng.aml.assignments.decisiontree.data.ClassProperty;
+import java.util.Scanner;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Dataset;
-import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Property;
-import tr.edu.firat.ceng.aml.assignments.decisiontree.data.impl.ClassPropertyImpl;
-import tr.edu.firat.ceng.aml.assignments.decisiontree.data.impl.DatasetImpl;
-import tr.edu.firat.ceng.aml.assignments.decisiontree.data.impl.NumericPropertyImpl;
+import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.DecisionTree;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.impl.DecisionTreeBuilder;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.impl.GiniGainImpl;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.util.CSV2DatasetUtil;
@@ -47,7 +42,17 @@ public class Main {
         try {
             Dataset dataset = util.convert("iris.data");
             DecisionTreeBuilder builder = new DecisionTreeBuilder(new GiniGainImpl());
-            builder.build(dataset);
+            DecisionTree tree = builder.build(dataset);
+            tree.printTree();
+            Scanner scanner = new Scanner(System.in);
+            while (true) {
+                if (tree.getResult() != null) {
+                    System.out.println(tree.getResult());
+                    break;
+                }
+                System.out.println(tree.getPropertyName() + " değerini girin");
+                tree = tree.next(scanner.nextDouble());
+            }
         } catch (IOException ex) {
             System.out.println(ex);
         }

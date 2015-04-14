@@ -47,10 +47,34 @@ public class DecisionTreeImpl implements DecisionTree {
         throw new RuntimeException();
     }
 
+    @Override
+    public void printTree() {
+        printTree(this, 0);
+    }
+
+    private void printTree(DecisionTree tree, int deep) {
+        if (tree.getConditionValue() != null) {
+            System.out.println(tree.getConditionValue() + " > " + tree.getPropertyName());
+
+        }
+        if (tree.getLeft().getResult() != null) {
+            System.out.println("LEFT Result: " + tree.getLeft().getResult());
+        } else {
+            printTree(tree.getLeft(), deep + 1);
+        }
+
+        if (tree.getRight().getResult() != null) {
+            System.out.println("RIGHT Result: " + tree.getRight().getResult());
+        } else {
+            printTree(tree.getRight(), deep + 1);
+        }
+    }
+
     public void setResult(String result) {
         this.result = result;
     }
 
+    @Override
     public String getResult() {
         return result;
     }
@@ -81,5 +105,15 @@ public class DecisionTreeImpl implements DecisionTree {
     @Override
     public Object getConditionValue() {
         return this.conditionValue;
+    }
+
+    @Override
+    public DecisionTree getLeft() {
+        return left;
+    }
+
+    @Override
+    public DecisionTree getRight() {
+        return right;
     }
 }

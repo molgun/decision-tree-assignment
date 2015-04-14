@@ -38,4 +38,6 @@ public interface Dataset {
     public Property getPropertyByName(String name);
 
     public void addProperties(List<Property> properties);
+
+    public void printDataset();
 }

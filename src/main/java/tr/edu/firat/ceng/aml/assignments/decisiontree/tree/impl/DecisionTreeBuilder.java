@@ -23,11 +23,26 @@ public class DecisionTreeBuilder {
     }
 
     public DecisionTree build(Dataset dataset) {
+        dataset.printDataset();
         gain.setDataset(dataset);
         Property valuable = getMostValuable(dataset);
         DecisionTree dt = gain.getPart(valuable);
-        dt.setLeft(build(dataset.createCopyOfDataset(valuable, dt.getConditionValue(), false)));
-        dt.setRight(build(dataset.createCopyOfDataset(valuable, dt.getConditionValue(), true)));
+        if (dt.getLeft() == null) {
+            Dataset newDataset = dataset.createCopyOfDataset(valuable, dt.getConditionValue(),false);
+            System.out.println(newDataset);
+            System.out.println(newDataset.getClassProperty());
+            System.out.println(newDataset.getProperties());
+            dt.setLeft(build(newDataset));
+
+        }
+        if (dt.getRight() == null) {
+            Dataset newDataset = dataset.createCopyOfDataset(valuable, dt.getConditionValue(),true);
+            System.out.println(newDataset);
+            System.out.println(newDataset.getClassProperty());
+            System.out.println(newDataset.getProperties());
+            dt.setRight(build(newDataset));
+
+        }
         return dt;
     }
 

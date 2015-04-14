@@ -28,6 +28,14 @@ public interface DecisionTree {
     public void setLeft(DecisionTree decisionTree);
 
     public void setRight(DecisionTree decisionTree);
-    
+
     public Object getConditionValue();
+
+    public String getResult();
+
+    public DecisionTree getLeft();
+
+    public DecisionTree getRight();
+
+    public void printTree();
 }
