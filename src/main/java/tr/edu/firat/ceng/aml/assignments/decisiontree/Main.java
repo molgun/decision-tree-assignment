@@ -30,27 +30,18 @@ import tr.edu.firat.ceng.aml.assignments.decisiontree.util.CSV2DatasetUtil;
 public class Main {
 
     public static void main(String[] args) {
-//        Main main = new Main();
-//        Dataset dataset = main.createDataset();
-//        Property property = dataset.getPropertyByName("a3");
-//        GiniGainImpl instance = new GiniGainImpl(dataset);
-//        Double expResult = null;
-//        Double result = instance.getGain(property);
-        //System.out.println(result);
-//        System.out.println(result);
         CSV2DatasetUtil util = new CSV2DatasetUtil();
         try {
             Dataset dataset = util.convert("iris.data");
             DecisionTreeBuilder builder = new DecisionTreeBuilder(new GiniGainImpl());
             DecisionTree tree = builder.build(dataset);
-            tree.printTree();
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 if (tree.getResult() != null) {
                     System.out.println(tree.getResult());
                     break;
                 }
-                System.out.println(tree.getPropertyName() + " değerini girin");
+                System.out.println("Enter " + tree.getPropertyName() + " value:");
                 tree = tree.next(scanner.nextDouble());
             }
         } catch (IOException ex) {
