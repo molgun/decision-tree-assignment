@@ -8,3 +8,9 @@ If you want to build it yourself, simply run
 mvn clean install
 ```
 after the clone and you will have your jar file under target directory.
+
+If you want to execute the jar file run this command from command line
+```
+java -jar decision-tree-assignment-0.1-SNAPSHOT-jar-with-dependencies.jar
+```
+then it will ask you the property values. If you type your values then it will give results to you.
