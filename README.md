@@ -14,3 +14,11 @@ If you want to execute the jar file run this command from command line
 java -jar decision-tree-assignment-0.1-SNAPSHOT-jar-with-dependencies.jar
 ```
 then it will ask you the property values. If you type your values then it will give results to you.
+
+TODO
+* Numeric values support for Entropy Gain
+* Nominal values support for Gini Gain
+* Dynamic gain selection
+* Adaptive input
+* cross-validation support
+* Refactoring Tree (it's awful right now)
