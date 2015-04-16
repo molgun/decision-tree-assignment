@@ -15,12 +15,9 @@
  */
 package tr.edu.firat.ceng.aml.assignments.decisiontree.data;
 
-import java.util.List;
-
 /**
  *
  * @author Muhammed Olgun <141129113@ogrenci.firat.edu.tr>
  */
 public interface NumericProperty extends Property<Number> {
-
 }

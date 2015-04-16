@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Muhammed Olgun <141129113@ogrenci.firat.edu.tr>.
+ * Copyright 2015 Muhammed Olgun <141129113@ogrenci.edu.tr>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tr.edu.firat.ceng.aml.assignments.decisiontree.tree;
+package tr.edu.firat.ceng.aml.assignments.decisiontree.data;
 
 /**
  *
- * @author Muhammed Olgun <141129113@ogrenci.firat.edu.tr>
+ * @author Muhammed Olgun <141129113@ogrenci.edu.tr>
  */
-public interface Rule {
+public interface Condition {
 
-    public String getPropertyName();
-
-    public String getResult();
+    public boolean execute(Object conditionValue);
 }

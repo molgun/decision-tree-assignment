@@ -31,4 +31,6 @@ public interface Property<V> {
     public List<V> getValues();
 
     public List<V> getCopiedValues();
+    
+    public int getNumberOfValuesProviding(Condition condition);
 }

@@ -59,4 +59,15 @@ public abstract class AbstractProperty<V> implements Property<V> {
     public Integer size() {
         return values.size();
     }
+
+    @Override
+    public int getNumberOfValuesProviding(Condition condition) {
+        int count = 0;
+        for (V value : values) {
+            if (condition.execute(value)) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

@@ -25,5 +25,6 @@ public interface NominalProperty extends Property<String> {
 
     public List<String> getUniqueValues();
 
+    @Deprecated
     public Integer getUniqueValueRawFrequency(String uniqueValue);
 }
