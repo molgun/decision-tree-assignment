@@ -23,7 +23,7 @@ import tr.edu.firat.ceng.aml.assignments.decisiontree.data.NumericProperty;
  *
  * @author Muhammed Olgun <141129113@ogrenci.edu.tr>
  */
-public final class PrePorcessUtils {
+public final class PreProcessUtils {
 
     public static final List<Number> split(NumericProperty property) {
         List<Number> splitted = new ArrayList<Number>();

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.AbstractProperty;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.ClassProperty;
+import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Condition;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Dataset;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.NominalProperty;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.NumericProperty;
@@ -148,5 +149,14 @@ public class DatasetImpl implements Dataset {
             property.getValues().remove(index);
         }
         classProperty.getValues().remove(index);
+    }
+
+    @Override
+    public int getTotalNumberOfValuesProviding(Condition condition) {
+        int total = 0;
+        for (Property property : properties) {
+            total += property.getNumberOfValuesProviding(condition);
+        }
+        return total;
     }
 }

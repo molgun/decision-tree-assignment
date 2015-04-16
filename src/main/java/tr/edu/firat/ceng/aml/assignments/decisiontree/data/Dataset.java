@@ -40,4 +40,6 @@ public interface Dataset {
     public void addProperties(List<Property> properties);
 
     public void printDataset();
+
+    public int getTotalNumberOfValuesProviding(Condition condition);
 }

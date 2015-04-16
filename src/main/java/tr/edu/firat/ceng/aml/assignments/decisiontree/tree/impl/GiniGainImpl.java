@@ -24,6 +24,7 @@ import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Property;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.exception.UnproperPropertyException;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.DecisionTree;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.Gain;
+import tr.edu.firat.ceng.aml.assignments.decisiontree.util.PreProcessUtils;
 
 /**
  *
@@ -32,18 +33,21 @@ import tr.edu.firat.ceng.aml.assignments.decisiontree.tree.Gain;
 public class GiniGainImpl implements Gain {
 
     private Dataset dataset;
+    private double classPropertyGini;
     private Split split;
 
     public GiniGainImpl() {
+        classPropertyGini = -1;
     }
 
     public GiniGainImpl(Dataset dataset) {
         this.dataset = dataset;
+        initClassPropertyGini();
     }
 
     @Override
     public DecisionTree getPart(Property property) {
-        double gain = getGain(property);
+        getGain(property);
         DecisionTreeImpl decisionTreeImpl = new DecisionTreeImpl();
         decisionTreeImpl.setPropertyName(property.getName());
         for (UniqueValueHolder holder : split.getValues()) {
@@ -87,9 +91,19 @@ public class GiniGainImpl implements Gain {
     @Override
     public double getGain(Property property) {
         if (property instanceof NumericProperty) {
+            if (classPropertyGini != -1) {
+                initClassPropertyGini();
+            }
             NumericProperty numericProperty = (NumericProperty) property;
             ClassProperty classProperty = dataset.getClassProperty();
-            double classPropertyGini = getClassPropertyGini();
+            List<Number> splitted = PreProcessUtils.split(numericProperty);
+
+            double gain = 0;
+
+            for (Number splittedNumber : splitted) {
+
+            }
+
             List<GiniIndex> giniIndexes = new ArrayList<GiniIndex>();
             for (int i = 0; i < numericProperty.getValues().size(); i++) {
                 Number get = numericProperty.getValues().get(i);
@@ -166,17 +180,18 @@ public class GiniGainImpl implements Gain {
     @Override
     public void setDataset(Dataset dataset) {
         this.dataset = dataset;
+        init
     }
 
-    private double getClassPropertyGini() {
-        double classPropertyEntropy = 1.0;
+    private void initClassPropertyGini() {
+        double gini = 1.0;
         ClassProperty classProperty = dataset.getClassProperty();
         for (String uniquevalue : classProperty.getUniqueValues()) {
             int rawFrequency = classProperty.getUniqueValueRawFrequency(uniquevalue);
             double relativeFrequency = (double) rawFrequency / classProperty.size();
-            classPropertyEntropy -= Math.pow(relativeFrequency, 2);
+            gini -= Math.pow(relativeFrequency, 2);
         }
-        return classPropertyEntropy;
+        this.classPropertyGini = gini;
     }
 
     private List<Split> splitGiniIndex(List<GiniIndex> sorted) {
