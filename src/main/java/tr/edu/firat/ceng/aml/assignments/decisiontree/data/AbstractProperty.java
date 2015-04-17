@@ -61,7 +61,7 @@ public abstract class AbstractProperty<V> implements Property<V> {
     }
 
     @Override
-    public int getNumberOfValuesProviding(Condition condition) {
+    public int getRawFrequency(Condition condition) {
         int count = 0;
         for (V value : values) {
             if (condition.execute(value)) {

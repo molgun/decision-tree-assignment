@@ -31,6 +31,11 @@ public enum Conditions {
                 public boolean execute(Object conditionValue) {
                     return value.equals(conditionValue);
                 }
+
+                @Override
+                public Object getValue() {
+                    return value;
+                }
             };
         }
 
@@ -48,6 +53,11 @@ public enum Conditions {
                             }
                         }
                         return false;
+                    }
+
+                    @Override
+                    public Object getValue() {
+                        return value;
                     }
                 };
             }
@@ -67,6 +77,11 @@ public enum Conditions {
                             }
                         }
                         return false;
+                    }
+
+                    @Override
+                    public Object getValue() {
+                        return value;
                     }
                 };
             }

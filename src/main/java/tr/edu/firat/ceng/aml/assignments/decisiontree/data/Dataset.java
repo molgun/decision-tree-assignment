@@ -40,6 +40,10 @@ public interface Dataset {
     public void addProperties(List<Property> properties);
 
     public void printDataset();
+    
+    public int size();
 
     public int getTotalNumberOfValuesProviding(Condition condition);
+
+    public int getPropertyFrequency(String propertyName, Condition propertyCondition, Condition classPropertyCondition);
 }

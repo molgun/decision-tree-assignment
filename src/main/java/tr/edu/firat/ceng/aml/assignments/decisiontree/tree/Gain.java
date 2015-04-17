@@ -15,6 +15,7 @@
  */
 package tr.edu.firat.ceng.aml.assignments.decisiontree.tree;
 
+import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Condition;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Dataset;
 import tr.edu.firat.ceng.aml.assignments.decisiontree.data.Property;
 
@@ -26,7 +27,7 @@ public interface Gain {
 
     public double getGain(Property property);
 
-    public DecisionTree getPart(Property property);
+    public Condition getBestCondition(Property property);
 
     public void setDataset(Dataset dataset);
 }

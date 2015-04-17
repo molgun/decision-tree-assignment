@@ -152,11 +152,32 @@ public class DatasetImpl implements Dataset {
     }
 
     @Override
+    public int size() {
+        return classProperty.size();
+    }
+    
+    @Override
     public int getTotalNumberOfValuesProviding(Condition condition) {
         int total = 0;
         for (Property property : properties) {
-            total += property.getNumberOfValuesProviding(condition);
+            total += property.getRawFrequency(condition);
         }
         return total;
+    }
+
+    @Override
+    public int getPropertyFrequency(String propertyName, Condition propertyCondition, Condition classPropertyCondition) {
+        Property property = getPropertyByName(propertyName);
+        if (property == null) {
+            throw new RuntimeException("Property not found!");
+        }
+        int frequency = 0;
+        for (int i = 0; i < property.getValues().size(); i++) {
+            Object get = property.getValues().get(i);
+            if (propertyCondition.execute(get) && classPropertyCondition.execute(classProperty.getValues().get(i))) {
+                frequency++;
+            }
+        }
+        return frequency;
     }
 }

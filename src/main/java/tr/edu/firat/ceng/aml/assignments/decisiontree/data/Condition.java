@@ -22,4 +22,6 @@ package tr.edu.firat.ceng.aml.assignments.decisiontree.data;
 public interface Condition {
 
     public boolean execute(Object conditionValue);
+    
+    public Object getValue();
 }

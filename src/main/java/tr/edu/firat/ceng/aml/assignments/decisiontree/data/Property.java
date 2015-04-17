@@ -32,5 +32,5 @@ public interface Property<V> {
 
     public List<V> getCopiedValues();
     
-    public int getNumberOfValuesProviding(Condition condition);
+    public int getRawFrequency(Condition condition);
 }
